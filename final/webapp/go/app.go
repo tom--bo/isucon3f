@@ -1,7 +1,6 @@
 package main
 
 import (
-	"code.google.com/p/go-uuid/uuid"
 	"crypto/sha256"
 	"database/sql"
 	"encoding/hex"
@@ -9,10 +8,12 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"github.com/pborman/uuid"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
+	_ "net/http/pprof"
 	"net/url"
 	"os"
 	"os/exec"
@@ -38,8 +39,8 @@ const (
 )
 
 var (
-	dbConn  *sql.DB
-	config  *Config
+	dbConn *sql.DB
+	config *Config
 )
 
 type Config struct {
@@ -158,6 +159,10 @@ func main() {
 	if err != nil {
 		log.Panicf("Error opening database: %v", err)
 	}
+
+	go func() {
+		log.Println(http.ListenAndServe("0.0.0.0:6060", nil))
+	}()
 
 	r := mux.NewRouter()
 	r.HandleFunc("/signup", signupHandler).Methods("POST")

@@ -18,6 +18,8 @@ use Sub::Rate;
 use Digest::SHA qw/ sha256_hex /;
 use List::Util qw/ first shuffle /;
 use Imager;
+use Imager::File::PNG;
+use Imager::File::JPEG;
 use Image::Size;
 use AnyEvent::HTTP;
 use Carp;

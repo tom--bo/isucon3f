@@ -16,3 +16,6 @@ requires "Image::Size";
 requires "String::Random";
 requires "Furl";
 requires "Imager";
+requires "Imager::File::PNG";
+requires "Imager::File::JPEG";
+
